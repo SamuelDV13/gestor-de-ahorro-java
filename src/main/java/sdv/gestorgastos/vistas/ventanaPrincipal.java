@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 public class ventanaPrincipal extends JFrame {
-    // ... (todos tus componentes de la UI JPanels, JButtons, etc. quedan igual) ...
+
     private JPanel panel_objetivo;
     private JPanel panel_principal;
     private JPanel panel_ahorro;
@@ -21,7 +21,6 @@ public class ventanaPrincipal extends JFrame {
     private JPanel panel_historial;
     private JPanel panel_proximo;
     private JTextField txt_ahorroObj;
-    //private JTextField txt_fechaObj;
     private JButton btn_abandonarObj;
     private JButton btn_guardar;
     private JButton btn_ahorrar;
@@ -86,12 +85,10 @@ public class ventanaPrincipal extends JFrame {
 
 
     public void actualizarVista() {
-        // Primero, determina el estado actual de la aplicación.
+
         boolean hayObjetivoActivo = (objetivo != null && objetivo.getCantidadObjetivo() != null);
 
-        // PARTE A: Controla el estado de los componentes (habilitado/deshabilitado)
         if (hayObjetivoActivo) {
-            // Estado: Hay un objetivo en progreso.
             txt_ahorroObj.setEditable(false);
             datePicker.setEnabled(false);
             cb_periodos.setEnabled(false);
@@ -101,7 +98,6 @@ public class ventanaPrincipal extends JFrame {
             btn_ahorrar.setEnabled(true);
             btn_analizar.setEnabled(true);
         } else {
-            // Estado: No hay objetivo, listo para crear uno nuevo.
             txt_ahorroObj.setEditable(true);
             datePicker.setEnabled(true);
             cb_periodos.setEnabled(true);
@@ -112,7 +108,6 @@ public class ventanaPrincipal extends JFrame {
             btn_analizar.setEnabled(false);
         }
 
-        // PARTE B: Llena los componentes con los datos del modelo
         if (hayObjetivoActivo) {
             txt_ahorroObj.setText(objetivo.getCantidadObjetivo().toString());
             datePicker.setDate(objetivo.getFechaObjetivo());
@@ -128,7 +123,6 @@ public class ventanaPrincipal extends JFrame {
                 lbl_cantidad.setText("Cantidad:");
             }
         } else {
-            // Limpia los campos si no hay objetivo
             txt_ahorroObj.setText("");
             datePicker.clear();
             cb_periodos.setSelectedIndex(0);
@@ -137,11 +131,8 @@ public class ventanaPrincipal extends JFrame {
             lbl_cantidad.setText("Cantidad:");
         }
 
-        // PARTE C: Actualiza la lista de ahorros
         llenarModeloLista();
 
-        // PARTE D: Lógica de colores (si el objetivo está cumplido)
-        // (Suponiendo que tienes un método en Objetivo para saber si se cumplió)
         if (hayObjetivoActivo && objetivo.verificarObjetivo()) {
             lbl_ahorroActual.setForeground(new Color(121, 220, 121));
             lbl_cantidadAhorroT.setForeground(new Color(121, 220, 121));
@@ -154,7 +145,6 @@ public class ventanaPrincipal extends JFrame {
 
     private void llenarModeloLista(){
         modeloLista.clear();
-        // Solo intenta llenar la lista si hay un objetivo
         if (objetivo != null && objetivo.obtenerProximos() != null) {
             List<Ahorro> listaProximos = objetivo.obtenerProximos();
             int i = 1;
@@ -185,7 +175,7 @@ public class ventanaPrincipal extends JFrame {
 
         btn_guardar.addActionListener(e -> {
             String monto = txt_ahorroObj.getText();
-            String fecha = datePicker.getDate().toString();
+            String fecha = datePicker.getDateStringOrEmptyString();
             TipoPlazo plazo = (TipoPlazo) cb_periodos.getSelectedItem();
 
             controlador.crearPlanAhorro(monto, fecha, plazo);

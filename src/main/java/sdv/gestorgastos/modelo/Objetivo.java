@@ -11,8 +11,8 @@ public class Objetivo {
     private LocalDate fechaObjetivo;
     private LocalDate fechaCreacion;
     private Plazo plazo;
-    private List<Ahorro> realizados;
-    private List<Ahorro> proximos;
+    private final List<Ahorro> realizados;
+    private final List<Ahorro> proximos;
 
 
     public Objetivo() {
@@ -119,17 +119,6 @@ public class Objetivo {
                 plazo.getTipo().toString() + "," +
                 plazo.getPeriodos();
     }
-
-    //Metodos de prueba
-    public String mostrarProximos(){
-        StringBuilder sb = new StringBuilder("Plazo: " + plazo.getTipo().toString() + "\n");
-        for (Ahorro a : proximos){
-            sb.append(a.ahorroEnLinea()).append("\n");
-        }
-
-        return sb.toString();
-    }
-
 
     public void resetearObjetivo(){
         this.setCantidadObjetivo(null);

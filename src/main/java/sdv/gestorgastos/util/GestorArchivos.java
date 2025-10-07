@@ -238,7 +238,6 @@ public class GestorArchivos {
         }
     }
 
-    //Metodos DEMO
     public Objetivo getObjetivo() {
         return objetivo;
     }
